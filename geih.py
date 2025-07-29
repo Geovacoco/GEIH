@@ -24,9 +24,17 @@ def csv_to_df(mnt_url : str, delim : str = ';') -> DataFrame:
     
 def df_to_parquet(df: DataFrame, output_path: str) -> None:
     """ Convierte un DataFrame a formato Parquet y lo guarda en la ruta especificada """
-    if isinstance(df,DataFrame): 
-        df.to_parquet(output_path)
-        print('El DataFrame se ha guardado en formato Parquet en la ruta especificada.')
-    else : 
-        raise ErrorGEIH("El argumento debe ser un DataFrame de pandas.")
+    if not isinstance(output_path, str):
+        raise ErrorGEIH("La ruta de salida debe ser una cadena de texto.")
 
+    if not output_path.endswith('.parquet'):
+        raise ErrorGEIH("La ruta de salida debe tener la extensión `.parquet`.")
+    
+    if not isinstance(df, DataFrame):
+        raise ErrorGEIH("El argumento `df` debe ser un pandas DataFrame.")
+    
+    # Guardar el DataFrame como archivo Parquet
+    try : 
+        df.to_parquet(output_path)
+    except Exception as e:
+        raise ErrorGEIH(f"Error al guardar el DataFrame como Parquet: {e}")
