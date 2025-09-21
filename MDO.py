@@ -31,6 +31,9 @@ def _build_periods(years, months):
         if months.lower() == "all":
             months = list(range(1, 13))
         elif months.upper().startswith("Q"):
+            _next = months[1]
+            if not _next.isdigit():
+                raise ValueError("`months` no es tipo: Q1, Q2, Q3, Q4")
             q = int(months[1]); a, b = _QMAP[q]; months = list(range(a, b + 1))
         else:
             raise ValueError("Formato de 'months' no reconocido.")
