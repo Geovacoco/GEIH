@@ -21,13 +21,19 @@ _QMAP = {1: (1,3), 2:(4,6), 3:(7,9), 4:(10,12)}
 # ----------------------------------------
 
 def _build_periods(years, months):
-    """ Verifica que `años` y `meses` tenga el formato deseado para posterior procesamiento """
-    if isinstance(years, int):
+    """ Verifica y crea `años` y `meses` con el formato deseado para posterior procesamiento """
+
+    if isinstance(years, int)
+        if years < 2001: 
+            raise ValueError("El año debe ser mayor o igual a 2001.")
         years = [years]
     elif isinstance(years, tuple) and len(years) == 2:
         years = list(range(years[0], years[1] + 1))
     else:
         years = list(years)
+    
+    #TODO(): Incluri raise para verificar que years no sobrepase el año actual.
+
     if isinstance(months, str):
         if months.lower() == "all":
             months = list(range(1, 13))
