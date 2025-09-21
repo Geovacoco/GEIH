@@ -18,6 +18,18 @@ CLAVES        = ['DIRECTORIO', 'SECUENCIA_P', 'ORDEN']
 CAPITULOS_DEF = ['10', '50', '60', '70', '80', '90', '94']
 _QMAP         = {1: (1,3), 2:(4,6), 3:(7,9), 4:(10,12)}
 # ----------------------------------------
+def usage():
+    return """ USO: Para leer `years` y `months` se debe espeficar:
+        <years>:
+                int:   2001, 2002 ... 2025                            -- Para leer un solo año
+                tuple: (2001, 2002), (2021, 2024), ... (2022, 2025)   -- Para leer varios años: `int`, pero con un año minimo y maximo
+                list:  [2021, 2025, 2020], [2021, 2025, 2020, 2021]   -- Para leer varios años: `int`, independientes sin necesidad de estar ordenados
+        <months>:
+                int:  1, 2, 3, ..., 12                               -- Para leer un solo mes
+                str: 'all', 'Q1', 'Q2', 'Q3', 'Q4'                   -- Para leer todos los doce meses o leer trimestre especificos
+                tuple: (1, 2), (1, 3), (1, 4), (1, 12)               -- Para leer varios meses: `int`, pero con un mes minimo y maximo
+                list:   [1, 2, 3, ..., 12]                           -- Para leer varios meses: `int`, independientes sin necesidad de estar ordenados
+        """
 
 def _build_periods(years, months):
     """ Verifica y crea `años` y `meses` con el formato deseado para posterior procesamiento """
