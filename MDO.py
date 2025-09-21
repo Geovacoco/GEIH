@@ -12,6 +12,7 @@ import time
 from pathlib import Path
 from typing import List, Tuple, Union, Optional
 import pandas as pd
+import re 
 
 # ---------- Parámetros globales ----------
 CLAVES = ['DIRECTORIO', 'SECUENCIA_P', 'ORDEN']
@@ -20,20 +21,19 @@ _QMAP = {1: (1,3), 2:(4,6), 3:(7,9), 4:(10,12)}
 # ----------------------------------------
 
 def _build_periods(years, months):
+    """ Verifica que `años` y `meses` tenga el formato deseado para posterior procesamiento """
     if isinstance(years, int):
         years = [years]
     elif isinstance(years, tuple) and len(years) == 2:
         years = list(range(years[0], years[1] + 1))
     else:
         years = list(years)
-
     if isinstance(months, str):
         if months.lower() == "all":
             months = list(range(1, 13))
         elif months.upper().startswith("Q"):
-            _next = months[1]
-            if not _next.isdigit():
-                raise ValueError("`months` no es tipo: Q1, Q2, Q3, Q4")
+            if not re.fullmatch(r"Q[1-4]", months.upper()):
+                raise ValueError("Para leer trimestres debe especificar: `Q1, Q2, Q3 o Q4`")
             q = int(months[1]); a, b = _QMAP[q]; months = list(range(a, b + 1))
         else:
             raise ValueError("Formato de 'months' no reconocido.")
