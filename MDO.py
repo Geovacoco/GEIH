@@ -1,38 +1,38 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Sep  3 17:54:27 2025
-
-Autor: ⚠ Daniel Mayor Pachon ⚠ :D XD :() :P (>.<) U.U
+Creado: Miércoles - Septiembre: 3 17:54:27 2025
+Autor:  Daniel Mayor Pachon
 """
 
-
 # MDO_18.py
+from pathlib  import Path
+from typing   import List, Tuple, Union, Optional
+from datatime import datetime #NOTE(): Toca verificar que datatime esté instalado.
 
-import time
-from pathlib import Path
-from typing import List, Tuple, Union, Optional
 import pandas as pd
-import re 
+import re
+import time
 
 # ---------- Parámetros globales ----------
-CLAVES = ['DIRECTORIO', 'SECUENCIA_P', 'ORDEN']
+CLAVES        = ['DIRECTORIO', 'SECUENCIA_P', 'ORDEN']
 CAPITULOS_DEF = ['10', '50', '60', '70', '80', '90', '94']
-_QMAP = {1: (1,3), 2:(4,6), 3:(7,9), 4:(10,12)}
+_QMAP         = {1: (1,3), 2:(4,6), 3:(7,9), 4:(10,12)}
 # ----------------------------------------
 
 def _build_periods(years, months):
     """ Verifica y crea `años` y `meses` con el formato deseado para posterior procesamiento """
-
     if isinstance(years, int)
-        if years < 2001: 
-            raise ValueError("El año debe ser mayor o igual a 2001.")
         years = [years]
     elif isinstance(years, tuple) and len(years) == 2:
         years = list(range(years[0], years[1] + 1))
     else:
         years = list(years)
-    
-    #TODO(): Incluri raise para verificar que years no sobrepase el año actual.
+
+    current_year = datatime.now().year
+    if min(years) < 2001:
+        raise ValueError("El año debe ser mayor o igual a 2001.")
+    if max(years) > current_year:
+        raise ValueError("El año debe ser menor o igual al año actual.")
 
     if isinstance(months, str):
         if months.lower() == "all":
