@@ -19,7 +19,7 @@ CAPITULOS_DEF = ['10', '50', '60', '70', '80', '90', '94']
 _QMAP         = {1: (1,3), 2:(4,6), 3:(7,9), 4:(10,12)}
 # ----------------------------------------
 def usage():
-    return """ USO: Para leer `years` y `months` se debe espeficar:
+    return """[USO]: Para leer `years` y `months` se debe espeficar:
         <years>:
                 int:   2001, 2002 ... 2025                            -- Para leer un solo año
                 tuple: (2001, 2002), (2021, 2024), ... (2022, 2025)   -- Para leer varios años: `int`, pero con un año minimo y maximo
@@ -41,10 +41,8 @@ def _build_periods(years, months):
         years = list(years)
 
     current_year = datatime.now().year
-    if min(years) < 2001:
-        raise ValueError("El año debe ser mayor o igual a 2001.")
-    if max(years) > current_year:
-        raise ValueError("El año debe ser menor o igual al año actual.")
+    if any(year < 2001 for year in years) or any(year > current_year for year in years):
+        raise ValueError("Los años deben estar entre 2001 y el año actual: " + usage())
 
     if isinstance(months, str):
         if months.lower() == "all":
@@ -68,7 +66,7 @@ def _build_periods(years, months):
                 raise ValueError("Elemento de 'months' no reconocido.")
         months = sorted(set(out))
     else:
-        raise ValueError("Tipo de 'months' no reconocido.")
+        raise ValueError("Tipo de `months` no reconocido: " + usage())
 
     return [(y, m) for y in years for m in months]
 
